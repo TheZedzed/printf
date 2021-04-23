@@ -6,7 +6,7 @@
 /*   By: azeraoul <azeraoul@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:25:41 by azeraoul          #+#    #+#             */
-/*   Updated: 2021/02/25 15:57:36 by azeraoul         ###   ########.fr       */
+/*   Updated: 2021/04/24 00:22:39 by azeraoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,33 @@
 
 int			extract_double(t_param *el, va_list arg)
 {
+	size_t	*ptr;
+	int		sign;
 	char	*res;
 	double	val;
 
 	val = va_arg(arg, double);
-	if (val < 0)
+	ptr = (size_t *)&val;
+	sign = *ptr >> 63;
+	if (sign)
 		el->prefix.write = 1;
 	if (!(res = check_limits(val, el)))
 	{
 		set_fplen(el);
-		res = ft_dbltoa(val, el->precision.value, el);
+		res = ft_dbltoa(val, sign, el->precision.value, el);
 	}
 	el->value = res;
 	return (el->value ? 0 : -1);
 }
 
-char		*ft_dbltoa(double nb, int plen, t_param *el)
+char		*ft_dbltoa(double nb, int sign, int plen, t_param *el)
 {
 	char	*res;
-	double	nb2;
 	int		len;
 	int		exp;
 
 	exp = 0;
 	len = lil_nblen(nb);
-	nb2 = remake(&nb,el, &exp);
 	if (nb < 1.0 && nb > -1.0 && el->type == 'g')
 	{
 		if (plen < 3)
@@ -55,6 +57,8 @@ char		*ft_dbltoa(double nb, int plen, t_param *el)
 		res = sub_exptoa(nb, plen, el);
 	else
 		res = sub_gtoa(nb, plen, exp, el);
+	if (sign)
+		res[0] = '-';
 	return (res);
 }
 

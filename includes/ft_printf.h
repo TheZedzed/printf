@@ -6,7 +6,7 @@
 /*   By: azeraoul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 15:14:31 by azeraoul          #+#    #+#             */
-/*   Updated: 2021/02/25 15:56:11 by azeraoul         ###   ########.fr       */
+/*   Updated: 2021/04/24 00:21:30 by azeraoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_uintoa(size_t nb, t_param *el);
 char	*ft_intoa(ssize_t nb, t_param *el);
 char	*sub_uintoa(size_t nb, int flag, char *base);
 char	*sub_intoa(ssize_t nb, t_param *el);
-char	*ft_dbltoa(double nb, int plen, t_param *el);
+char	*ft_dbltoa(double nb, int sign, int plen, t_param *el);
 char	*sub_ftoa(double nb, int plen, t_param *el);
 int		nbrlen(int base, size_t nb);
 void	print_list(t_param *el);
